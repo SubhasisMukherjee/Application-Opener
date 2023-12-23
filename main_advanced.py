@@ -56,10 +56,6 @@ try:
     time.sleep(2)   # to cater to the time delay needed to open cmd window
     cmd_window = gw.getActiveWindow()
     cmd_window.maximize()
-    # # Create STARTUPINFO structure to configure the window size
-    # startupinfo = subprocess.STARTUPINFO()
-    # startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-    # startupinfo.wShowWindow = ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 3)  # SW_MAXIMIZE
 
 except FileNotFoundError:
     print("mongosh.exe not found. Please check the path or install MongoDB.")
