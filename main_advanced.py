@@ -8,17 +8,28 @@ import openpyxl
 from config.config import DEBUG
 
 
-def find_latest_file_or_dir(path):
+def get_latest(items):
     max_id = 0
     latest_item = ""
     latest_item_name = ""
 
-    for pth in os.listdir(path):
-        id = int(pth.split('.')[0])
+    for item in items:
+        id = int(item.split('.')[0])
         if id > max_id:
             max_id = id
-            latest_item = pth.strip()
-            latest_item_name = pth.split('.')[1].strip()
+            latest_item = item.strip()
+            latest_item_name = item.split('.')[1].strip()
+
+    return max_id, latest_item, latest_item_name
+
+
+def find_latest_file_or_dir(path, find_flag):
+    if find_flag == "dir":
+        l_dirs = [d for d in os.listdir(path) if os.path.isdir(path + "\\" + d)]
+        max_id, latest_item, latest_item_name = get_latest(l_dirs)
+    elif find_flag == "file":
+        l_files = [f for f in os.listdir(path) if os.path.isfile(path + "\\" + f)]
+        max_id, latest_item, latest_item_name = get_latest(l_files)
 
     return max_id, latest_item, latest_item_name
 
@@ -39,7 +50,7 @@ def create_course_map(tracker_path):
 
     return dict_course_map
 
-# Task 1: Execute mongosh.exe
+## Task 1: Execute mongosh.exe
 try:
     subprocess.Popen(['start', 'cmd', '/k', "mongosh.exe"], shell=True)
     time.sleep(2)   # to cater to the time delay needed to open cmd window
@@ -54,11 +65,12 @@ except FileNotFoundError:
     print("mongosh.exe not found. Please check the path or install MongoDB.")
 
 
-# Task 2: Open an excel spreadsheet in MS Excel
-course_tracker_path = r"C:\Users\Subhasis\Desktop\Udemy - MongoDB .xlsx"
+## Task 2: Open an excel spreadsheet in MS Excel
+course_tracker_path = "D:\\Study\\Data Engineering\\Udemy\\MongoDB - The Complete Developer's Guide 2023\\Course Tracker.xlsx"
 try:
     # Open the file with excel
     subprocess.run(["start", "excel", course_tracker_path], shell=True)
+    time.sleep(2)
     excel_window = gw.getActiveWindow()
     excel_window.maximize()
 
@@ -71,9 +83,9 @@ try:
     dir_path = "D:\\Study\\Data Engineering\\Udemy\\MongoDB - The Complete Developer's Guide 2023\\"
     # max_subdir_idx, max_file_idx = 0, 0
     # latest_subdir, latest_section, latest_file, latest_lecture, l_lectures_current_section = "", "", "", "", ""
-    max_subdir_idx, latest_subdir, latest_section = find_latest_file_or_dir(dir_path)
+    max_subdir_idx, latest_subdir, latest_section = find_latest_file_or_dir(dir_path, 'dir')
     latest_subdir_path = dir_path + latest_subdir
-    max_file_idx, latest_file, latest_lecture = find_latest_file_or_dir(latest_subdir_path)
+    max_file_idx, latest_file, latest_lecture = find_latest_file_or_dir(latest_subdir_path, 'file')
     if DEBUG == "Y":
         print(f"Latest subdirectory: {latest_subdir}")
         print(f"Latest section: {latest_section}")
@@ -82,7 +94,7 @@ try:
 
     d_course_map = create_course_map(course_tracker_path)
     if DEBUG == "Y":
-        print(d_course_map)
+        print("Course map: " + str(d_course_map))
 
     l_sections = list(d_course_map.keys())
     l_lectures_current_section = d_course_map[latest_section]
@@ -140,7 +152,7 @@ try:
     if new_section_dir_to_open == True:
         os.mkdir(section_dir_to_open_abs_path)
 
-    subprocess.Popen("explorer " + section_dir_to_open_abs_path)
+    subprocess.Popen(["explorer", section_dir_to_open_abs_path])
     time.sleep(2)
     cmd_window = gw.getActiveWindow()
     cmd_window.maximize()
@@ -160,13 +172,13 @@ except FileNotFoundError:
     print(f"Directory not found: {latest_subdir_path}")
 
 except ValueError:
-    print(f"The naming format of the directory of the file is not correct")
+    print(f"The naming format of the directory or the file is not correct")
 
 except Exception as excp:
     print(f"Error occured: {excp}")
 
 
-# Task 4: Open a specific URL in Chrome
+## Task 4: Open a specific URL in Chrome
 chrome_url = "https://www.udemy.com/course/mongodb-the-complete-developers-guide/"
 webbrowser.open(chrome_url)
 
@@ -180,9 +192,9 @@ webbrowser.open(chrome_url)
 #     url_is_open = True
 
 
-# Task 5: Open a text file in Notepad++
-notepad_plus_plus_path = r"C:\Program Files\Notepad++\notepad++.exe"
-file_to_open = r"C:/Users/Subhasis/Desktop/MongoDB  commands.txt"
+## Task 5: Open a text file in Notepad++
+notepad_plus_plus_path = "C:\\Program Files\\Notepad++\\notepad++.exe"
+file_to_open = "D:\\Study\\Data Engineering\\Udemy\\MongoDB - The Complete Developer's Guide 2023\\MongoDB  commands.txt"
 
 try:
     subprocess.Popen([notepad_plus_plus_path, file_to_open])
@@ -194,7 +206,11 @@ except Exception as e:
 
 ## Task 6:  Open MS Paint
 try:
-    subprocess.Popen([r"C:\Users\Subhasis\AppData\Local\Microsoft\WindowsApps\mspaint.exe"])
+    subprocess.Popen(["C:\\Users\\Subhasis\\AppData\\Local\\Microsoft\\WindowsApps\\mspaint.exe"])
+    time.sleep(2)
+    paint_window = gw.getActiveWindow()
+    paint_window.maximize()
+
 except FileNotFoundError:
     print("MS Paint not found. Please check the path to MS Paint executable.")
 except Exception as e:
@@ -203,7 +219,7 @@ except Exception as e:
 
 ## Task 7: open Snipping Tool
 try:
-    subprocess.Popen([r"C:\Users\Subhasis\AppData\Local\Microsoft\WindowsApps\SnippingTool.exe"])
+    subprocess.Popen(["C:\\Users\\Subhasis\\AppData\\Local\\Microsoft\\WindowsApps\\SnippingTool.exe"])
 except FileNotFoundError:
     print("Snipping Tool not found. Please check the path to Snipping Tool executable.")
 except Exception as e:
