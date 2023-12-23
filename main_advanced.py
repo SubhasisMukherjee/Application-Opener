@@ -75,8 +75,8 @@ except Exception as e:
     print(f"Error: {e}")
 
 
-## Task 3: Open latest directory for the ongoing section in File Explorer,
-##         Open latest file for the ongoing lecture in MS Word,
+## Task 3: Open latest directory for the ongoing section in File Explorer.
+##         Open latest file for the ongoing lecture in MS Word.
 ##         If all lectures of a section are makred "Complete" in course tracker,
 ##         create new directory for next section and new word document for its first lecture
 

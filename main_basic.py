@@ -56,7 +56,7 @@ except FileNotFoundError:
     print(f"Directory not found: {latest_subdir_path}")
 
 
-## Task 3: Open the word document for the latest lecture in MS Word
+## Task 3: Open the document for the latest lecture in MS Word
 latest_file = find_latest_file_or_dir(latest_subdir_path, 'file')
 latest_file_abs_path = latest_subdir_path + "\\" + latest_file
 
