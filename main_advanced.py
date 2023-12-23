@@ -34,7 +34,6 @@ def find_latest_file_or_dir(path, find_flag):
     return max_id, latest_item, latest_item_name
 
 
-
 def create_course_map(tracker_path):
     workbook = openpyxl.load_workbook(tracker_path)
     sheet = workbook['Sheet1']
@@ -49,6 +48,8 @@ def create_course_map(tracker_path):
                                                     sheet.cell(row=row, column=3).value.strip() if sheet.cell(row=row, column=3).value is not None else sheet.cell(row=row, column=3).value))
 
     return dict_course_map
+
+
 
 ## Task 1: Execute mongosh.exe
 try:
@@ -74,7 +75,11 @@ except Exception as e:
     print(f"Error: {e}")
 
 
-# Task 3: Open the latest directory in File Explorer
+## Task 3: Open latest directory for the ongoing section in File Explorer,
+##         Open latest file for the ongoing lecture in MS Word,
+##         If all lectures of a section are makred "Complete" in course tracker,
+##         create new directory for next section and new word document for its first lecture
+
 try:
     dir_path = "D:\\Study\\Data Engineering\\Udemy\\MongoDB - The Complete Developer's Guide 2023\\"
     # max_subdir_idx, max_file_idx = 0, 0

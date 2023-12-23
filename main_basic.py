@@ -30,7 +30,7 @@ def find_latest_file_or_dir(path, find_flag):
     return latest_item
 
 
-# Task 1: Execute mongosh.exe
+## Task 1: Execute mongosh.exe
 try:
     subprocess.Popen(['start', 'cmd', '/k', "mongosh.exe"], shell=True)
     time.sleep(2)   # to cater to the time delay needed to open cmd window
@@ -41,7 +41,7 @@ except FileNotFoundError:
     print("mongosh.exe not found. Please check the path or install MongoDB.")
 
 
-# Task 2: Open the latest directory in File Explorer
+## Task 2: Open the directory for the latest section in File Explorer
 dir_path = "D:\\Study\\Data Engineering\\Udemy\\MongoDB - The Complete Developer's Guide 2023\\"
 latest_subdir = find_latest_file_or_dir(dir_path, 'dir')
 latest_subdir_path = dir_path + latest_subdir
@@ -56,7 +56,7 @@ except FileNotFoundError:
     print(f"Directory not found: {latest_subdir_path}")
 
 
-# Task 3: Open the latest doc inside the directory in MS Word
+## Task 3: Open the word document for the latest lecture in MS Word
 latest_file = find_latest_file_or_dir(latest_subdir_path, 'file')
 latest_file_abs_path = latest_subdir_path + "\\" + latest_file
 
@@ -73,7 +73,7 @@ except Exception as e:
     print(f"Error: {e}")
 
 
-# Task 4: Open a specific URL in Chrome
+## Task 4: Open the course in Chrome
 chrome_url = "https://www.udemy.com/course/mongodb-the-complete-developers-guide/"
 webbrowser.open(chrome_url)
 
@@ -86,7 +86,9 @@ webbrowser.open(chrome_url)
 # if any(chrome_url in process for process in open_chrome_processes):
 #     url_is_open = True
 
-# Task 5: Open an excel spreadsheet in MS Excel
+
+
+## Task 5: Open the course tracker spreadsheet in MS Excel
 course_tracker_path = "D:\\Study\\Data Engineering\\Udemy\\MongoDB - The Complete Developer's Guide 2023\\Course Tracker.xlsx"
 try:
     # Open the file with excel
@@ -98,7 +100,7 @@ except Exception as e:
     print(f"Error: {e}")
 
 
-# Task 6: Open a text file in Notepad++
+## Task 6: Open the text file with commands in Notepad++
 notepad_plus_plus_path = "C:\\Program Files\\Notepad++\\notepad++.exe"
 file_to_open = "D:\\Study\\Data Engineering\\Udemy\\MongoDB - The Complete Developer's Guide 2023\\MongoDB  commands.txt"
 
